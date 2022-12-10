@@ -1,0 +1,50 @@
+﻿@model List<BirthdayAT.Models.Friend>
+
+<h1>Adicionar Amigo:</h1>
+<form method="post" action="/Friend/Create">
+    @Html.AntiForgeryToken()
+    <label>Nome</label>
+    <input type="text" name="FirstName" />
+    <label>Sobrenome</label>
+    <input type="text" name="LastName" />
+    <label>Aniversário</label>
+    <input type="date" name="Birthday" />
+
+    <input type="submit" value="Enviar" />
+</form>
+
+
+<h1>Editar Amigos:</h1>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>Nome</td>
+            <td>Sobrenome</td>
+            <td>Aniversário</td>
+            <td>Editar</td>
+            <td>Excluir</td>
+        </tr>
+    </thead>
+@{
+    foreach (var friend in Model)
+    {
+        <tr>
+            <td>
+                @friend.FirstName
+            </td>
+            <td>
+                @friend.LastName
+            </td>
+            <td>
+                @friend.Birthday.ToString()
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", "Friend", friend )
+            </td>
+            <td>
+                @Html.ActionLink("Excluir", "Delete", "Friend", new { LastName = friend.LastName })
+            </td>
+        </tr>
+    }
+}
+</table>
