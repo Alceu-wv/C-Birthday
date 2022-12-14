@@ -39,20 +39,41 @@ namespace BirthdayAT.Controllers
         // POST: Friend/EditFriend/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditFriend(IFormCollection friendData)
+        public ActionResult EditFriend(int Id, IFormCollection friendData)
         {
             var friends = _db.Friends;
+            Console.WriteLine(friendData);
             var birthday = Convert.ToDateTime(friendData["Birthday"]);
             var firstName = (String)friendData["FirstName"];
             var lastName = (String)friendData["LastName"];
-            var oldLastName = (String)friendData["OldLastName"];
 
-            var frientToUpdate = friends.Where(f => f.LastName == oldLastName).First();
+            var frientToUpdate = friends.Where(f => f.Id == Id).First();
             frientToUpdate.FirstName = firstName;
             frientToUpdate.LastName = lastName;
             frientToUpdate.Birthday = birthday;
             _db.SaveChanges();
-            
+
+            return View("~/Views/Home/Index.cshtml", friends.ToList());
+        }
+
+        // POST: Friend/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IFormCollection friendData)
+        {
+            var friends = _db.Friends;
+            Console.WriteLine(friendData);
+            var birthday = Convert.ToDateTime(friendData["Birthday"]);
+            var firstName = (String)friendData["FirstName"];
+            var lastName = (String)friendData["LastName"];
+
+            Friend friend = new();
+            friend.FirstName = firstName;
+            friend.LastName = lastName;
+            friend.Birthday = birthday;
+            _db.Add(friend);
+            _db.SaveChanges();
+
             return View("~/Views/Home/Index.cshtml", friends.ToList());
         }
 

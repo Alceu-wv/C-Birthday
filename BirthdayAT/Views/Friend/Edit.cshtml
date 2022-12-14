@@ -1,7 +1,7 @@
 ﻿@model Friend
 
 <h1>Adicionar Amigo:</h1>
-<form method="post" action="/Friend/EditFriend">
+<form method="post" action="/Friend/EditFriend/@Model.Id">
     @Html.AntiForgeryToken()
     <label>Nome</label>
     <input type="text" name="FirstName" value="@Model.FirstName"/>
@@ -9,7 +9,6 @@
     <input type="text" name="LastName" value="@Model.LastName" />
     <label>Aniversário</label>
     <input type="date" name="Birthday" value="@Model.Birthday" />
-    <input style="visibility:hidden" type="date" name="OldLastName" value="@Model.LastName" />
 
     <input type="submit" value="Enviar" />
 </form>
